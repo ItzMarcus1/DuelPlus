@@ -3,6 +3,7 @@ package me.itzmarcus.duelplus.events;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -16,13 +17,10 @@ public class FreezedEvent implements Listener {
 
     public static ArrayList<String> freezed = new ArrayList<>();
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void move(PlayerMoveEvent e) {
         if(freezed.contains(e.getPlayer().getName())) {
-            Location to = e.getTo();
-            Location from = e.getFrom();
-            e.getPlayer().teleport(from);
-            e.setCancelled(true);
+            e.setTo(e.getFrom());
         }
     }
 }

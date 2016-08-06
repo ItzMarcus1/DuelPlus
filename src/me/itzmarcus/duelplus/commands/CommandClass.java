@@ -74,6 +74,8 @@ public class CommandClass implements CommandExecutor {
                         return true;
                     } else {
                         GameManager.sendInvitation(p, Bukkit.getPlayer(player));
+                        GameManager.setIsPlaying(p, true);
+                        GameManager.setIsPlaying(Bukkit.getPlayer(player), true);
                         return true;
                     }
                     default: p.sendMessage("Error");
