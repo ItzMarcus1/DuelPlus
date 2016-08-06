@@ -1,0 +1,7 @@
+name: DuelPlus
+main: me.itzmarcus.duelplus.Core
+version: 1.0
+
+commands:
+  duel:
+    description: Main Command
