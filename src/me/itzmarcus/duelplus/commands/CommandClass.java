@@ -51,6 +51,17 @@ public class CommandClass implements CommandExecutor {
                         Core.spawnPoints.saveConfig();
                         p.sendMessage(ChatUtilities.prefix + "§aYou have set the second spawn for the duel arena.");
                         return true;
+                    } else if(args[0].equalsIgnoreCase("setlobby")) {
+                        Core.spawnPoints.set("lobby",
+                                p.getLocation().getWorld().getName() + ":" +
+                                        p.getLocation().getX() + ":"
+                                        + p.getLocation().getY() + ":"
+                                        + p.getLocation().getZ() + ":"
+                                        + p.getLocation().getPitch() + ":"
+                                        + p.getLocation().getYaw());
+                        Core.spawnPoints.saveConfig();
+                        p.sendMessage(ChatUtilities.prefix + "§aYou have set the lobby.");
+                        return true;
                     }
                     if(args[0].equalsIgnoreCase("accept")) {
                         if(!GameManager.hasPendingInvite(p)) {
@@ -74,8 +85,6 @@ public class CommandClass implements CommandExecutor {
                         return true;
                     } else {
                         GameManager.sendInvitation(p, Bukkit.getPlayer(player));
-                        GameManager.setIsPlaying(p, true);
-                        GameManager.setIsPlaying(Bukkit.getPlayer(player), true);
                         return true;
                     }
                     default: p.sendMessage("Error");

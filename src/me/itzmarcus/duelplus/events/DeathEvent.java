@@ -1,6 +1,8 @@
 package me.itzmarcus.duelplus.events;
 
+import me.itzmarcus.duelplus.utils.ChatUtilities;
 import me.itzmarcus.duelplus.utils.GameManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,7 +21,10 @@ public class DeathEvent implements Listener {
             GameManager.setIsPlaying(dead, false);
         }
         if(GameManager.isPlayerPlaying(killer.getName())) {
-            GameManager.setIsPlaying(killer, true);
+            GameManager.setIsPlaying(killer, false);
         }
+        Bukkit.getServer().broadcastMessage(ChatUtilities.prefix + "§3" + killer.getName() + " §cdefeated §3" + dead.getName() + " §ain a duel.");
+        GameManager.teleportToLobby(dead, killer);
+        // Add winning effects and a delay for the teleport.
     }
 }

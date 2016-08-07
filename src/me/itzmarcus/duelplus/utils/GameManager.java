@@ -43,6 +43,7 @@ public class GameManager {
             return;
         }
         duelRequest.put(sender, receiver);
+        duelRequest.put(receiver, sender);
         sender.sendMessage(ChatUtilities.prefix + "§aYou have invited " + receiver.getName() + " to a duel.");
         receiver.sendMessage(ChatUtilities.prefix + "§a" + sender.getName() + " has invited you to a duel.");
     }
@@ -154,6 +155,28 @@ public class GameManager {
             delay(5000);
             FreezedEvent.freezed.remove(playerone.getName());
             FreezedEvent.freezed.remove(playertwo.getName());
+
+            // Send besked og en lyd om at de er i gang.
         }
+    }
+
+    public static void teleportToLobby(Player dead, Player killer) {
+        String lobby = Core.spawnPoints.getString("lobby");
+
+        String[] data = lobby.split(":");
+
+        World world = Bukkit.getWorld(data[0]);
+
+        double x = Double.valueOf(data[1]);
+        double y = Double.valueOf(data[2]);
+        double z = Double.valueOf(data[3]);
+
+        float pitch = Float.valueOf(data[4]);
+        float yaw = Float.valueOf(data[5]);
+
+        Location lobbyLoc = new Location(world, x, y, z, yaw, pitch);
+
+        killer.teleport(lobbyLoc);
+        dead.teleport(lobbyLoc);
     }
 }

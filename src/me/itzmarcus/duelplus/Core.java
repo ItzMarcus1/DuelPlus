@@ -1,6 +1,7 @@
 package me.itzmarcus.duelplus;
 
 import me.itzmarcus.duelplus.commands.CommandClass;
+import me.itzmarcus.duelplus.events.DeathEvent;
 import me.itzmarcus.duelplus.events.FreezedEvent;
 import me.itzmarcus.duelplus.files.MyConfig;
 import me.itzmarcus.duelplus.files.MyConfigManager;
@@ -18,8 +19,10 @@ public class Core extends JavaPlugin implements Listener {
         getCommand(command).setExecutor(commandExecutor);
     }
 
-    private void listener(Listener listener) {
-        Bukkit.getServer().getPluginManager().registerEvents(listener, this);
+    private void listener(Listener... listener) {
+        for(Listener l : listener) {
+            Bukkit.getServer().getPluginManager().registerEvents(l, this);
+        }
     }
 
     public static MyConfigManager manager;
@@ -31,7 +34,7 @@ public class Core extends JavaPlugin implements Listener {
         manager = new MyConfigManager(this);
         spawnPoints = manager.getNewConfig("spawns.yml");
         command("duel", new CommandClass());
-        listener(new FreezedEvent());
+        listener(new FreezedEvent(), new DeathEvent());
     }
 
     public void onDisable() {
